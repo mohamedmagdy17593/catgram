@@ -1,4 +1,4 @@
 import _ from 'lodash'
-import { userResolver } from './User'
+import { catResolver } from './Cat'
 
-export const resolvers = _.merge(userResolver)
+export const resolvers = _.merge(catResolver)
