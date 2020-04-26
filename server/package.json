@@ -1,0 +1,24 @@
+{
+  "name": "catgram-server",
+  "version": "1.0.0",
+  "description": "catgram grpahql server",
+  "main": "index.js",
+  "scripts": {
+    "start": "dotenv -- nodemon --exec babel-node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
+    "dotenv-cli": "^3.1.0",
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "graphql-tag": "^2.10.3",
+    "graphql-yoga": "^1.18.3",
+    "lodash": "^4.17.15"
+  }
+}
