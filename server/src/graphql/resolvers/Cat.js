@@ -16,7 +16,7 @@ export const catResolver = {
 
       let cat = await prisma.cat.findOne({ where: { email } })
       if (cat) {
-        throw Error(`There is a cat with this email! Please login`)
+        throw Error(`There is a cat with this email! Please login instead`)
       }
 
       await prisma.cat.create({ data: { name, email } })

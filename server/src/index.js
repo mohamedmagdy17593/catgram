@@ -7,7 +7,7 @@ const port = process.env.PORT
 async function init() {
   const server = new GraphQLServer({ typeDefs, resolvers })
 
-  await server.start({ port })
+  await server.start({ port, endpoint: '/graphql' })
   console.log(`[server] is running on port ${port}`)
 }
 
