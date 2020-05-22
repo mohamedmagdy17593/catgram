@@ -14,9 +14,9 @@ export function sendMail(email) {
   return new Promise((resolve, reject) => {
     return client.sendMail(email, (err, info) => {
       if (err) {
-        resolve(err)
-      } else {
         reject(err)
+      } else {
+        resolve(info)
       }
     })
   })

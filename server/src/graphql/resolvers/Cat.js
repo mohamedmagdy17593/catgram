@@ -1,13 +1,27 @@
 import { prisma } from '../../prisma'
 import { sendLoginEmail } from '../../utils/email'
 import jwt from 'jsonwebtoken'
+import { getAuthCat } from '../../utils/auth'
 
-const expiresIn = '1h'
+// TODO change
+const expiresIn = '8h'
+
+const cookieOptions = {
+  httpOnly: true,
+  sameSite: true,
+  signed: true,
+}
 
 export const catResolver = {
   Query: {
-    async hello() {
-      return 'hello'
+    async me(_, __, { req }) {
+      let cat = await getAuthCat(req)
+
+      if (!cat) {
+        return null
+      }
+
+      return cat
     },
   },
   Mutation: {
@@ -39,7 +53,11 @@ export const catResolver = {
 
       return true
     },
-    async auth(_, { input }) {
+    logout(_, __, { res }) {
+      res.clearCookie('catId', cookieOptions)
+      return true
+    },
+    async auth(_, { input }, { res }) {
       let { token } = input
       console.log({ token })
 
@@ -53,6 +71,16 @@ export const catResolver = {
 
       let { email } = decoded
       let cat = await prisma.cat.findOne({ where: { email } })
+
+      if (!cat) {
+        throw Error(`the Email was invalid!`)
+      }
+
+      // login via cookie
+      res.cookie('catId', cat.id, {
+        ...cookieOptions,
+        maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
+      })
 
       return cat
     },

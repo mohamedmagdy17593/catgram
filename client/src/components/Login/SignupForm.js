@@ -27,7 +27,7 @@ function SignupForm({ onSuccess }) {
   return (
     <Form layout="vertical" onFinish={handleSignup}>
       <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-        <Input placeholder="cat@catmail.com" />
+        <Input placeholder="Sassy" />
       </Form.Item>
 
       <Form.Item

@@ -1,29 +1,55 @@
 import './App.less'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Layout } from 'antd'
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider } from '@apollo/react-hooks'
 import Nav from './components/Nav/Nav'
-import Login from './components/Login/Login'
-import { CatProvider } from './context/Cat'
+import Routes from './components/Routes/Routes'
+import { gql } from 'apollo-boost'
+import { useQuery } from '@apollo/react-hooks'
+import Loading from './components/Loading/Loading'
+import { useCat } from './context/Cat'
 
 const { Content } = Layout
 
-const client = new ApolloClient({ uri: '/graphql' })
+const ME = gql`
+  query ME {
+    me {
+      id
+      name
+      email
+      bio
+    }
+  }
+`
 
 function App() {
+  let [isCatRequested, setIsCatRequested] = useState(false)
+  let { setCat } = useCat()
+
+  useQuery(ME, {
+    onCompleted(data) {
+      if (data.me) {
+        setCat(data.me)
+      }
+
+      setIsCatRequested(true)
+    },
+    onError() {
+      setIsCatRequested(true)
+    },
+  })
+
+  if (!isCatRequested) {
+    return <Loading tip="Loading" />
+  }
+
   return (
-    <ApolloProvider client={client}>
-      <CatProvider>
-        <Layout className="App">
-          <Nav />
-          <Content>
-            <Login />
-          </Content>
-        </Layout>
-      </CatProvider>
-    </ApolloProvider>
+    <Layout className="App">
+      <Nav />
+      <Content>
+        <Routes />
+      </Content>
+    </Layout>
   )
 }
 

@@ -22,12 +22,13 @@ export const typeDefs = gql`
   }
 
   type Query {
-    hello: String!
+    me: Cat
   }
 
   type Mutation {
     signup(input: SignupInput!): Boolean!
     login(input: LoginInput!): Boolean!
+    logout: Boolean!
     auth(input: AuthInput!): Cat!
   }
 `

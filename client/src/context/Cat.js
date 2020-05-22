@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const catContext = React.createContext()
 
 export function CatProvider({ children }) {
-  let [cat, setCat] = useState()
+  let [cat, setCat] = useState(null)
 
   return (
     <catContext.Provider value={{ cat, setCat }}>

@@ -5,11 +5,22 @@ import { Tabs } from 'antd'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import WelcomeMessage from './WelcomeMessage'
+import { useLocation } from 'react-router-dom'
+import { parse } from 'query-string'
+import Auth from '../Auth/Auth'
 
 const { TabPane } = Tabs
 
 function Login() {
+  let location = useLocation()
+  let { token } = parse(location.search)
+
   let [messageType, setMessageType] = useState()
+
+  // this is user token
+  if (token) {
+    return <Auth token={token} />
+  }
 
   return (
     <div className="Login">
