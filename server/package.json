@@ -9,6 +9,7 @@
     "prisma:migrate:save": "prisma migrate save --experimental",
     "prisma:migrate:up": "prisma migrate up --experimental",
     "prisma:migrate": "npm run prisma:migrate:save && npm run prisma:migrate:up",
+    "prisma:studio": "prisma studio --experimental",
     "prisma": "npm run prisma:migrate && npm run prisma:generate"
   },
   "keywords": [],

@@ -30,6 +30,10 @@ function SignupForm({ onSuccess }) {
         <Input placeholder="Sassy" />
       </Form.Item>
 
+      <Form.Item name="username" label="Username" rules={[{ required: true }]}>
+        <Input placeholder="sassy" />
+      </Form.Item>
+
       <Form.Item
         name="email"
         label="Email"

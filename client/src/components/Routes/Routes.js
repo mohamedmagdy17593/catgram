@@ -5,39 +5,25 @@ import PleaseLogin from '../PleaseLogin/PleaseLogin'
 import Home from '../Home/Home'
 import { useCat } from '../../context/Cat'
 import NotFound from '../NotFound/NotFound'
+import Profile from '../Profile/Profile'
 
 function Routes() {
   let { cat } = useCat()
 
-  if (cat) {
-    return (
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route>
-          <NotFound />
-        </Route>
-      </Switch>
-    )
-  } else {
-    return (
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route>
-          <PleaseLogin />
-        </Route>
-      </Switch>
-    )
-  }
+  return (
+    <Switch>
+      <Route exact path="/">
+        {cat ? <Home /> : <Redirect to="/login" />}
+      </Route>
+      <Route exact path="/login">
+        <Login />
+      </Route>
+      <Route exact path="/:catUsername">
+        <Profile />
+      </Route>
+      <Route>{cat ? <NotFound /> : <PleaseLogin />}</Route>
+    </Switch>
+  )
 }
 
 export default Routes

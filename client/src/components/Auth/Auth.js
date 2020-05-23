@@ -12,6 +12,8 @@ const AUTH_CAT = gql`
       id
       name
       email
+      username
+      avatar
       bio
     }
   }

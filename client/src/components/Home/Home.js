@@ -9,7 +9,7 @@ function Home() {
 
   return (
     <div className="Home container">
-      <Title>Welcome: {cat.name}</Title>
+      <Title style={{ textAlign: 'center' }}>Welcome: {cat.name}</Title>
     </div>
   )
 }

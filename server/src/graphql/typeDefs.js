@@ -5,12 +5,16 @@ export const typeDefs = gql`
     id: ID!
     name: String!
     email: String!
+    username: String!
+    avatar: String!
+    cover: String
     bio: String
   }
 
   input SignupInput {
     email: String!
     name: String!
+    username: String!
   }
 
   input LoginInput {
@@ -23,6 +27,7 @@ export const typeDefs = gql`
 
   type Query {
     me: Cat
+    profile(username: String!): Cat!
   }
 
   type Mutation {

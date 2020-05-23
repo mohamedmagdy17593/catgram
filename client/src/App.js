@@ -17,6 +17,8 @@ const ME = gql`
       id
       name
       email
+      username
+      avatar
       bio
     }
   }
@@ -24,7 +26,7 @@ const ME = gql`
 
 function App() {
   let [isCatRequested, setIsCatRequested] = useState(false)
-  let { setCat } = useCat()
+  let { setCat, cat } = useCat()
 
   useQuery(ME, {
     onCompleted(data) {
@@ -42,6 +44,8 @@ function App() {
   if (!isCatRequested) {
     return <Loading tip="Loading" />
   }
+
+  console.log({ cat })
 
   return (
     <Layout className="App">

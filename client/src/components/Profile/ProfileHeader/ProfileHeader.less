@@ -1,0 +1,48 @@
+.ProfileHeader {
+  &__cover {
+    height: 296px;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  &__info-avatar {
+    margin-top: -10%;
+    position: relative;
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid white;
+    background: white;
+    > img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+    }
+  }
+
+  &__info-edit-profile-button {
+    margin-bottom: 16px;
+  }
+
+  &__main-info {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #d8dee9;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  &__main-info-name {
+    font-size: 32px;
+  }
+
+  &__main-info-username {
+    font-size: 16px;
+    color: rgba(46, 52, 64, 0.45);
+  }
+}

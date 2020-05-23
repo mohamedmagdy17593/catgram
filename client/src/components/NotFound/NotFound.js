@@ -5,10 +5,10 @@ import { Typography } from 'antd'
 
 const { Paragraph } = Typography
 
-function NotFound() {
+function NotFound({ message = `Not Found 😐` }) {
   return (
     <div className="NotFound">
-      <Paragraph>Not Found {'😐'}</Paragraph>
+      <Paragraph>{message}</Paragraph>
     </div>
   )
 }

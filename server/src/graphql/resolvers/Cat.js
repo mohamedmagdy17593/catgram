@@ -1,7 +1,8 @@
 import { prisma } from '../../prisma'
 import { sendLoginEmail } from '../../utils/email'
 import jwt from 'jsonwebtoken'
-import { getAuthCat } from '../../utils/auth'
+import { getAuthCat, usernameBlacklist } from '../../utils/auth'
+import { defaultAvatar } from '../../utils/cat'
 
 // TODO change
 const expiresIn = '8h'
@@ -23,17 +24,31 @@ export const catResolver = {
 
       return cat
     },
+    async profile(_, { username }) {
+      let cat = await prisma.cat.findOne({ where: { username } })
+      return cat
+    },
   },
   Mutation: {
     async signup(_, { input }) {
-      let { name, email } = input
+      let { name, email, username } = input
+      username = username.toLowerCase()
 
-      let cat = await prisma.cat.findOne({ where: { email } })
+      if (usernameBlacklist.includes(username)) {
+        throw Error(`${username} is not avalid username`)
+      }
+
+      let cat
+      cat = await prisma.cat.findOne({ where: { email } })
       if (cat) {
         throw Error(`There is a cat with this email! Please login instead`)
       }
+      cat = await prisma.cat.findOne({ where: { username } })
+      if (cat) {
+        throw Error(`There is a cat with this username! Choose different one`)
+      }
 
-      await prisma.cat.create({ data: { name, email } })
+      await prisma.cat.create({ data: { name, email, username } })
 
       let token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn })
       await sendLoginEmail(email, token)
@@ -83,6 +98,11 @@ export const catResolver = {
       })
 
       return cat
+    },
+  },
+  Cat: {
+    avatar(cat) {
+      return cat.avatar || defaultAvatar
     },
   },
 }

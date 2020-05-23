@@ -1,7 +1,7 @@
 import './Nav.less'
 
 import React from 'react'
-import { Layout, Menu, Button } from 'antd'
+import { Layout, Menu, Dropdown } from 'antd'
 import catLogo from '../../images/cat-logo.svg'
 import { Link, useHistory } from 'react-router-dom'
 import { useCat } from '../../context/Cat'
@@ -39,19 +39,34 @@ function Nav() {
 
         {cat && (
           <Menu mode="horizontal">
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">
-              <Button
-                onClick={() => {
-                  logout().then(() => {
-                    setCat(null)
-                    history.push('/login')
-                  })
-                }}
+            <Menu.Item key="avatar">
+              <Dropdown
+                placement="bottomRight"
+                overlay={
+                  <Menu>
+                    <Menu.Item key="profile">
+                      <Link to={`/${cat.username}`}>Profile</Link>
+                    </Menu.Item>
+                    <Menu.Divider />
+                    <Menu.Item
+                      key="logout"
+                      onClick={() => {
+                        logout().then(() => {
+                          setCat(null)
+                          history.push('/login')
+                        })
+                      }}
+                    >
+                      Log out
+                    </Menu.Item>
+                  </Menu>
+                }
+                trigger={['click']}
               >
-                Log out
-              </Button>
+                <div className="Nav__avatar-wrapper">
+                  <img src={cat.avatar} alt={`avatar for ${cat.name}`} />
+                </div>
+              </Dropdown>
             </Menu.Item>
           </Menu>
         )}

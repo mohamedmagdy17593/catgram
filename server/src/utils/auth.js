@@ -8,3 +8,5 @@ export async function getAuthCat(req) {
   }
   return null
 }
+
+export const usernameBlacklist = ['login']

@@ -11,6 +11,23 @@
     align-items: center;
   }
 
+  &__avatar-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    > img {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+    }
+  }
+
+  .ant-menu-horizontal {
+    display: flex;
+  }
+
   // clear menu border bottom
   .ant-menu-horizontal,
   .ant-menu-horizontal > .ant-menu-item,
