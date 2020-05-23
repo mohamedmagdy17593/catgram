@@ -42,7 +42,7 @@ function App() {
   })
 
   if (!isCatRequested) {
-    return <Loading tip="Loading" />
+    return <Loading />
   }
 
   console.log({ cat })

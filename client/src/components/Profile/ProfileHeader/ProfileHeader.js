@@ -1,15 +1,17 @@
 import './ProfileHeader.less'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { getCatCoverStyle } from '../../../utils/cat'
 import { Button, Typography } from 'antd'
 import { useCat } from '../../../context/Cat'
+import EditModal from './EditModal/EditModal'
 
 const { Text } = Typography
 
 function ProfileHeader({ cat }) {
-  console.log({ cat })
   let { cat: me } = useCat()
+
+  let [showEditModal, setShowEditModal] = useState(false)
 
   return (
     <div className="ProfileHeader">
@@ -19,13 +21,19 @@ function ProfileHeader({ cat }) {
           <img src={cat.avatar} alt={`avatar for ${cat.name}`} />
         </div>
         {me?.id === cat.id && (
-          <Button
-            className="ProfileHeader__info-edit-profile-button"
-            shape="round"
-            type="dashed"
-          >
-            Edit Profile
-          </Button>
+          <div className="ProfileHeader__info-edit-profile-button">
+            <Button
+              shape="round"
+              type="dashed"
+              onClick={() => setShowEditModal(true)}
+            >
+              Edit Profile
+            </Button>
+            <EditModal
+              show={showEditModal}
+              onClose={() => setShowEditModal(false)}
+            />
+          </div>
         )}
       </div>
       <div className="ProfileHeader__main-info container">
@@ -35,6 +43,9 @@ function ProfileHeader({ cat }) {
         <Text className="ProfileHeader__main-info-username">
           @{cat.username}
         </Text>
+        {cat.bio && (
+          <Text className="ProfileHeader__main-info-bio">{cat.bio}</Text>
+        )}
       </div>
     </div>
   )

@@ -1,8 +1,7 @@
 import './Nav.less'
 
 import React from 'react'
-import { Layout, Menu, Dropdown } from 'antd'
-import catLogo from '../../images/cat-logo.svg'
+import { Layout, Menu, Dropdown, Button } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import { useCat } from '../../context/Cat'
 import { gql } from 'apollo-boost'
@@ -27,17 +26,10 @@ function Nav() {
     <Header className="Nav">
       <div className="Nav__container container">
         <div className="Nav__logo">
-          <Link to="/">
-            <img
-              src={catLogo}
-              alt="catgram logo"
-              height="40"
-              className="Nav__logo-icon"
-            />
-          </Link>
+          <Link to="/">CatGram</Link>
         </div>
 
-        {cat && (
+        {cat ? (
           <Menu mode="horizontal">
             <Menu.Item key="avatar">
               <Dropdown
@@ -69,6 +61,10 @@ function Nav() {
               </Dropdown>
             </Menu.Item>
           </Menu>
+        ) : (
+          <Link to="/login">
+            <Button type="primary">Login</Button>
+          </Link>
         )}
       </div>
     </Header>

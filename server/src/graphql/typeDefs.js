@@ -25,6 +25,13 @@ export const typeDefs = gql`
     token: String!
   }
 
+  input EditProfileInput {
+    name: String!
+    bio: String
+    avatar: String
+    cover: String
+  }
+
   type Query {
     me: Cat
     profile(username: String!): Cat!
@@ -35,5 +42,6 @@ export const typeDefs = gql`
     login(input: LoginInput!): Boolean!
     logout: Boolean!
     auth(input: AuthInput!): Cat!
+    editProfile(input: EditProfileInput): Cat!
   }
 `

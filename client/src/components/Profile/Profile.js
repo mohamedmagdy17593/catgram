@@ -28,7 +28,7 @@ function Profile() {
   })
 
   if (loading) {
-    return <Loading tip="load profile" />
+    return <Loading />
   }
 
   if (error) {

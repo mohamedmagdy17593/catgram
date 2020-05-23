@@ -99,6 +99,18 @@ export const catResolver = {
 
       return cat
     },
+    async editProfile(_, { input }, { req }) {
+      let { name, bio } = input
+
+      let me = await getAuthCat(req)
+
+      let cat = await prisma.cat.update({
+        where: { id: me.id },
+        data: { name, bio },
+      })
+
+      return cat
+    },
   },
   Cat: {
     avatar(cat) {
