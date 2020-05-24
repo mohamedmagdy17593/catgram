@@ -3,6 +3,7 @@ import { sendLoginEmail } from '../../utils/email'
 import jwt from 'jsonwebtoken'
 import { getAuthCat, usernameBlacklist } from '../../utils/auth'
 import { defaultAvatar } from '../../utils/cat'
+import { cloudinaryUpload } from '../../utils/upload'
 
 // TODO change
 const expiresIn = '8h'
@@ -100,13 +101,28 @@ export const catResolver = {
       return cat
     },
     async editProfile(_, { input }, { req }) {
-      let { name, bio } = input
+      let { name, bio, avatar, cover } = input
 
       let me = await getAuthCat(req)
 
+      let avatarUrl
+      if (avatar) {
+        avatarUrl = await cloudinaryUpload(avatar, 'catgram-avatar')
+      }
+
+      let coverUrl
+      if (cover) {
+        coverUrl = await cloudinaryUpload(cover, 'catgram-cover')
+      }
+
       let cat = await prisma.cat.update({
         where: { id: me.id },
-        data: { name, bio },
+        data: {
+          name,
+          bio,
+          avatar: avatarUrl,
+          cover: coverUrl,
+        },
       })
 
       return cat

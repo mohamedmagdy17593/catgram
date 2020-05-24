@@ -10,11 +10,6 @@ const AUTH_CAT = gql`
   mutation AUTH_CAT($input: AuthInput!) {
     auth(input: $input) {
       id
-      name
-      email
-      username
-      avatar
-      bio
     }
   }
 `
@@ -22,7 +17,7 @@ const AUTH_CAT = gql`
 function Auth({ token }) {
   let history = useHistory()
 
-  let { setCat } = useCat()
+  let { refetchCat } = useCat()
   let [auth, { loading }] = useMutation(AUTH_CAT, {
     variables: {
       input: {
@@ -33,8 +28,8 @@ function Auth({ token }) {
       showError(error)
       history.replace('/login')
     },
-    onCompleted(data) {
-      setCat(data.auth)
+    async onCompleted() {
+      await refetchCat()
       history.push('/')
     },
   })

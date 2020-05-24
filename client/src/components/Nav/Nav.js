@@ -18,7 +18,7 @@ const LOG_OUT = gql`
 function Nav() {
   let history = useHistory()
 
-  let { cat, setCat } = useCat()
+  let { cat, refetchCat } = useCat()
 
   let [logout] = useMutation(LOG_OUT)
 
@@ -42,11 +42,10 @@ function Nav() {
                     <Menu.Divider />
                     <Menu.Item
                       key="logout"
-                      onClick={() => {
-                        logout().then(() => {
-                          setCat(null)
-                          history.push('/login')
-                        })
+                      onClick={async () => {
+                        await logout()
+                        await refetchCat()
+                        history.push('/login')
                       }}
                     >
                       Log out
